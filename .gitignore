@@ -27,3 +27,4 @@ yarn-error.log*
 blocklet.js
 .DS_Store
 .vscode
+uploads/

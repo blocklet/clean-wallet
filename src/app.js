@@ -3,14 +3,12 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 're
 
 import './app.css';
 import Home from './pages/home';
-import About from './pages/about';
 
 function App() {
   return (
     <div className="app">
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
         <Route path="/home" component={Home} />
         <Redirect to="/" />
       </Switch>
