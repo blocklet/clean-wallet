@@ -11,4 +11,7 @@ module.exports = {
   globals: {
     logger: true,
   },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
+  },
 };

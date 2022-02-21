@@ -2,10 +2,10 @@ const { override, addWebpackAlias, overrideDevServer } = require('customize-cra'
 const path = require('path');
 
 function resolve(dir) {
-  return path.join(__dirname, '.', dir);
+  return path.join(__dirname, './', dir);
 }
 
-const devServerConfig = () => (config) => {
+const devServerConfig = (config) => {
   return {
     ...config,
     proxy: {
@@ -27,5 +27,5 @@ module.exports = {
       '@src': resolve('src'),
     })
   ),
-  devServer: overrideDevServer(devServerConfig()),
+  devServer: overrideDevServer(devServerConfig),
 };

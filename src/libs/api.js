@@ -11,4 +11,17 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+axios.interceptors.response.use(
+  (response) => {
+    if (response.status === 200 && response?.data?.code === 0) {
+      return Promise.resolve(response?.data);
+    }
+
+    throw new Error(response?.data?.error);
+  },
+  (error) => {
+    throw new Error(error?.message);
+  }
+);
+
 export default axios;

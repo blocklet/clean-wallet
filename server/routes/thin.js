@@ -9,7 +9,7 @@ const resolve = (dir) => {
   return path.join(__dirname, '../../', dir);
 };
 
-const { formData, decryptFile, thinWallet } = require('../libs/thin');
+const { uploadFormData, decryptFile, thinWallet } = require('../libs/thin');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -21,14 +21,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post('/upload', upload.single('file'), formData, decryptFile, thinWallet, async (req, res) => {
+router.post('/upload', upload.single('file'), uploadFormData);
+
+router.get('/password', decryptFile, thinWallet, async (req, res) => {
   return res.jsonp({ purchaseFactoryAddresses: '' });
-});
-
-router.get('/upload', decryptFile, thinWallet, async (req, res) => {
-  console.log(req);
-
-  res.json({ purchaseFactoryAddresses: '' });
 });
 
 (() => {

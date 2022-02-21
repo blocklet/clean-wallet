@@ -1,27 +1,43 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '@arcblock/ux/lib/Button';
-
 import { useDropzone } from 'react-dropzone';
+import { useSnackbar } from 'notistack';
+import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+
+import Typography from '@material-ui/core/Typography';
+import BackupIcon from '@material-ui/icons/Backup';
+// eslint-disable-next-line import/no-unresolved
+import PwdDialog from '@src/components/dialog/password';
 
 import api from '../libs/api';
 
 export default function SetupRecover() {
+  const { t } = useLocaleContext();
+
+  const [open, setOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
   const onDrop = async (files) => {
     const formData = new FormData();
     formData.append('file', files[0]);
 
-    const res = await api({
-      method: 'post',
-      url: '/api/thin/upload',
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    try {
+      await api({
+        method: 'post',
+        url: '/api/thin/upload',
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
 
-    console.log(res);
+      setOpen(true);
+    } catch (error) {
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+      });
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -30,35 +46,37 @@ export default function SetupRecover() {
     multiple: false,
   });
 
-  const onRecoverWithMnemonic = () => {};
-
   return (
-    <Container>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some files here, or click to select files</p>}
-      </div>
+    <Container component="div">
+      <Typography className={`center upload ${isDragActive ? 'active' : ''}`} component="div" {...getRootProps()}>
+        <BackupIcon style={{ fontSize: 56 }} />
+        <Typography className="upload-text">{t('common.upload')}</Typography>
+        <input {...getInputProps()} data-cy="setup-upload-file" />
+      </Typography>
 
-      <RecoverButton variant="text" color="secondary" rounded onClick={onRecoverWithMnemonic}>
-        上传
-      </RecoverButton>
+      {open && <PwdDialog onClose={() => {}} />}
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled(Typography)`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .upload {
-    width: 100%;
+    width: 400px;
     height: 218px;
     border: 1px dashed #4598fa;
     box-sizing: border-box;
     border-radius: 12px;
-    margin-top: 48px;
     color: #4598fa;
     flex-direction: column;
     cursor: pointer;
@@ -68,6 +86,7 @@ const Container = styled.div`
       line-height: 19px;
       text-align: center;
       margin: 20px 34px 0;
+      color: #4598fa;
     }
   }
 
@@ -81,8 +100,4 @@ const Container = styled.div`
     color: #999999;
     margin: 40px 0;
   }
-`;
-
-const RecoverButton = styled(Button)`
-  width: 100%;
 `;
