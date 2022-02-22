@@ -36,6 +36,7 @@ export default function SetupRecover() {
     } catch (error) {
       enqueueSnackbar(error.message, {
         variant: 'error',
+        autoHideDuration: 3000,
       });
     }
   };
@@ -54,7 +55,13 @@ export default function SetupRecover() {
         <input {...getInputProps()} data-cy="setup-upload-file" />
       </Typography>
 
-      {open && <PwdDialog onClose={() => {}} />}
+      {open && (
+        <PwdDialog
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
+      )}
     </Container>
   );
 }
@@ -64,12 +71,7 @@ const Container = styled(Typography)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  width: 100%;
 
   .upload {
     width: 400px;

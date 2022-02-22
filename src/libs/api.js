@@ -13,7 +13,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    if (response.status === 200 && response?.data?.code === 0) {
+    if (response?.data?.code === 0) {
       return Promise.resolve(response?.data);
     }
 

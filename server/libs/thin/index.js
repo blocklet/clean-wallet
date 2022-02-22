@@ -1,6 +1,10 @@
+/* eslint-disable consistent-return */
 const fs = require('fs-extra');
 const path = require('path');
-const mime = require('mime');
+const dayjs = require('dayjs');
+const contentDisposition = require('content-disposition');
+const destroy = require('destroy');
+const onFinished = require('on-finished');
 
 const { decryptBackup, encryptBackup } = require('../encrypt');
 const thinFunc = require('./util');
@@ -64,14 +68,26 @@ const thinWallet = async (req, res) => {
     const result = await thinFunc(backup);
     const encryptStr = encryptBackup(JSON.stringify(result), pwd);
 
-    const fi = resolve('.temp.abt');
-    const mimetype = mime.getType('txt');
+    return res.jsonp({ code: 0, data: encryptStr });
+    // const now = new Date();
+    // const date = dayjs(now).format('YYYY-MM-DD_HH-mm-ss');
+    // const filename = `abt_backup_${date}.abt`;
+    // const absPath = resolve(filename);
 
-    res.setHeader('Content-disposition', `attachment; filename=${fi}`);
-    res.setHeader('Content-type', mimetype);
+    // fs.writeFile(absPath, encryptStr, (err) => {
+    //   if (err) {
+    //     return res.jsonp({ code: -1, error: err?.message });
+    //   }
 
-    const filestream = fs.createReadStream(fi);
-    filestream.pipe(res);
+    //   res.setHeader('Content-Disposition', contentDisposition(absPath));
+
+    //   // send file
+    //   const stream = fs.createReadStream(absPath);
+    //   stream.pipe(res);
+    //   onFinished(res, () => {
+    //     destroy(stream);
+    //   });
+    // });
   } catch (error) {
     return res.jsonp({ code: -1, error: error?.message });
   }
