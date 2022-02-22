@@ -68,7 +68,20 @@ const thinWallet = async (req, res) => {
     const result = await thinFunc(backup);
     const encryptStr = encryptBackup(JSON.stringify(result), pwd);
 
-    return res.jsonp({ code: 0, data: encryptStr });
+    return res.jsonp({
+      code: 0,
+      data: {
+        apps: {
+          before: backup.appInfoList.length,
+          after: result.appInfoList.length,
+        },
+        accounts: {
+          before: backup.accounts.length,
+          after: result.accounts.length,
+        },
+        backup: encryptStr,
+      },
+    });
     // const now = new Date();
     // const date = dayjs(now).format('YYYY-MM-DD_HH-mm-ss');
     // const filename = `abt_backup_${date}.abt`;

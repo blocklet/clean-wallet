@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
@@ -9,7 +10,6 @@ import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 
 import Typography from '@material-ui/core/Typography';
 import BackupIcon from '@material-ui/icons/Backup';
-// eslint-disable-next-line import/no-unresolved
 import PwdDialog from '@src/components/dialog/password';
 
 import api from '../libs/api';

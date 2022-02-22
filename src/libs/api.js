@@ -14,7 +14,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     if (response?.data?.code === 0) {
-      return Promise.resolve(response?.data);
+      return Promise.resolve(response?.data?.data);
     }
 
     throw new Error(response?.data?.error);

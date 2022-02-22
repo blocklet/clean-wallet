@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -14,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+import Table from '@src/components/table/thin';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -49,6 +51,7 @@ const DialogTitle = withStyles(styles)((props) => {
 
 export default function FormDialog({ onClose }) {
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
 
   const { register, handleSubmit } = useForm({
@@ -58,7 +61,7 @@ export default function FormDialog({ onClose }) {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (res) => {
     // eslint-disable-next-line no-console
     try {
       setLoading(true);
@@ -66,12 +69,10 @@ export default function FormDialog({ onClose }) {
       const content = await api({
         method: 'get',
         url: '/api/thin/password',
-        params: data,
+        params: res,
       });
 
-      if (content) {
-        await downloadBackupFile(content);
-      }
+      setData(content);
     } catch (error) {
       enqueueSnackbar(error.message, {
         variant: 'error',
@@ -79,46 +80,93 @@ export default function FormDialog({ onClose }) {
       });
     } finally {
       setLoading(false);
-      onClose();
     }
+  };
+
+  const onDownload = async () => {
+    if (data.backup) {
+      await downloadBackupFile(data.backup);
+    }
+
+    onClose();
   };
 
   const password = register('password', { required: true });
 
+  const RenderContent = () => {
+    if (data) {
+      return (
+        <>
+          <DialogContent>
+            <div className="center">
+              <Table {...data} />
+            </div>
+          </DialogContent>
+
+          <Button
+            type="submit"
+            onClick={onDownload}
+            color="primary"
+            rounded
+            variant="contained"
+            className="form-submit">
+            下载
+          </Button>
+        </>
+      );
+    }
+
+    if (loading) {
+      return (
+        <div className="center" style={{ marginBottom: 68 }}>
+          <Spinner />
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <DialogContent>
+          <TextField
+            label="Password"
+            fullWidth
+            name="password"
+            variant="outlined"
+            type="password"
+            onChange={password.onChange}
+            onBlur={password.onBlur}
+            inputRef={password.ref}
+          />
+        </DialogContent>
+
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          color="primary"
+          rounded
+          variant="contained"
+          className="form-submit">
+          确认
+        </Button>
+      </>
+    );
+  };
+
+  const RenderTitle = () => {
+    if (data) {
+      return <>下载备份</>;
+    }
+
+    return <>输入密码</>;
+  };
+
   return (
     <Dialog open onClose={onClose}>
-      <DialogTitle onClose={onClose}>输入密码</DialogTitle>
+      <DialogTitle onClose={onClose}>
+        <RenderTitle />
+      </DialogTitle>
       <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        {loading ? (
-          <div className="center" style={{ marginBottom: 68 }}>
-            <Spinner />
-          </div>
-        ) : (
-          <>
-            <DialogContent>
-              <TextField
-                label="Password"
-                fullWidth
-                name="password"
-                variant="outlined"
-                type="password"
-                onChange={password.onChange}
-                onBlur={password.onBlur}
-                inputRef={password.ref}
-              />
-            </DialogContent>
-
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              rounded
-              variant="contained"
-              className="form-submit">
-              确认
-            </Button>
-          </>
-        )}
+        <RenderContent />
       </Form>
     </Dialog>
   );
@@ -130,7 +178,7 @@ FormDialog.propTypes = {
 
 const Form = styled.form`
   display: flex;
-  height: 200px;
+  min-height: 200px;
   width: 100%;
   justify-content: center;
   flex-direction: column;
