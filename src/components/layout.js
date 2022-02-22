@@ -12,6 +12,7 @@ function Layout({ children, ...rest }) {
 
   return (
     <StyledLayout
+      className="layout"
       variant="border"
       title={env.appName || t('common.title')}
       brand={env.appName || t('common.title')}
@@ -34,6 +35,8 @@ Layout.defaultProps = {
 };
 
 const StyledLayout = styled(BaseLayout)`
+  display: flex;
+
   .locale-selector {
     margin-left: 12px;
     font-size: 16px;

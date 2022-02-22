@@ -76,12 +76,6 @@ const theme = create({
         borderRadius: '100%',
       },
     },
-    MuiContainer: {
-      root: {
-        display: 'flex',
-        marginTop: 0,
-      },
-    },
   },
 });
 
