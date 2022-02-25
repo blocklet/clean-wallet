@@ -1,6 +1,6 @@
 {
   "name": "clean-wallet",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "bin": {
     "clean-wallet": "server/clean.js"
   },
@@ -9,7 +9,7 @@
     "server/libs/encrypt.js",
     "server/clean.js",
     "server/utils.js",
-    "README_COMMAND.md"
+    "screenshots"
   ],
   "scripts": {
     "build": "react-app-rewired build",
