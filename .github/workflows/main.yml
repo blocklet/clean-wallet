@@ -21,19 +21,22 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      # - name: Publish npm
-      #   uses: JS-DevTools/npm-publish@v1
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
+      - name: Init
+        run: make github-init
+
+      - name: Publish npm
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Blocklet workflow
         uses: blocklet/action-workflow@v1
         with:
-          skip-upload: true
-          skip-deploy: true
+          skip-upload: false
+          skip-deploy: false
           bundle-command: yarn bundle
-          store-endpoint: ${{ secrets.STORE_ENDPOINT_DEV }}
-          store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_DEV }}
+          store-endpoint: ${{ secrets.STORE_ENDPOINT_PROD }}
+          store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_PROD }}
           server-endpoint: ${{ secrets.STAGING_NODE_ENDPOINT }}
           server-access-key: ${{ secrets.STAGING_NODE_ACCESS_KEY }}
           server-access-secret: ${{ secrets.STAGING_NODE_ACCESS_SECRET }}

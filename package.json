@@ -1,9 +1,8 @@
 {
   "name": "clean-wallet",
   "version": "0.1.0",
-  "exports": "./server/clean.js",
   "bin": {
-    "clean": "server/clean.js"
+    "clean-wallet": "server/clean.js"
   },
   "files": [
     "server/libs/clean",

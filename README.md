@@ -2,6 +2,34 @@
 
 This is a blocklet for cleaning up wallet backups, cleaning up apps and accounts that have failed.
 
+# Use Command line
+
+## Start
+
+With NPM:
+
+```bash
+npx clean-wallet
+```
+
+With Yarn:
+
+```bash
+yarn dlx clean-wallet
+```
+
+With PNPM:
+
+```bash
+pnpm dlx clean-wallet
+```
+
+# Use blocklet
+
+## Use
+
+- Install local from [Store](https://store.blocklet.dev/) or [The official environment]()
+
 ## Visuals
 
 ![upload page](./screenshots/upload.png)
