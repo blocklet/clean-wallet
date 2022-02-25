@@ -1,13 +1,10 @@
 /* eslint-disable consistent-return */
 const fs = require('fs-extra');
 const path = require('path');
-const dayjs = require('dayjs');
-const contentDisposition = require('content-disposition');
-const destroy = require('destroy');
-const onFinished = require('on-finished');
-
+const nacl = require('tweetnacl');
+const { toUint8Array, toBuffer, fromBase58, toBase58 } = require('@ocap/util');
 const { decryptBackup, encryptBackup } = require('../encrypt');
-const thinFunc = require('./util');
+const cleanFunc = require('./util');
 
 const resolve = (dir) => {
   return path.join(__dirname, '../../../', dir);
@@ -15,6 +12,9 @@ const resolve = (dir) => {
 
 let files = null;
 let backupStr = '';
+let their = {};
+let my = {};
+const nonce = nacl.randomBytes(nacl.box.nonceLength);
 
 const uploadFormData = (req, res) => {
   try {
@@ -23,9 +23,16 @@ const uploadFormData = (req, res) => {
 
     backupStr = form;
 
+    their = nacl.box.keyPair();
+    my = nacl.box.keyPair();
+
     return res.jsonp({
       code: 0,
-      data: backupStr,
+      data: {
+        nonce: toBase58(nonce),
+        publicKey: toBase58(my.publicKey),
+        secretKey: toBase58(their.secretKey),
+      },
     });
   } catch (error) {
     return res.jsonp({ code: -1, error: error?.message });
@@ -38,12 +45,20 @@ const decryptFile = (req, res, next) => {
     return res.jsonp({ code: -1, error: 'Please enter your password' });
   }
 
+  const origin = toUint8Array(fromBase58(pwd));
+  const info = nacl.box.open(origin, nonce, their.publicKey, my.secretKey);
+  const password = toBuffer(info).toString();
+
+  if (!info || !password) {
+    return res.jsonp({ code: -1, error: 'Please upload the file again' });
+  }
+
   if (!backupStr) {
     return res.jsonp({ code: -1, error: 'Please upload the backup first' });
   }
 
   try {
-    const result = decryptBackup(backupStr, pwd);
+    const result = decryptBackup(backupStr, password);
     const abt = result.replace(/\s/g, '');
     try {
       files = JSON.parse(abt);
@@ -60,12 +75,12 @@ const decryptFile = (req, res, next) => {
   }
 };
 
-const thinWallet = async (req, res) => {
+const cleanWallet = async (req, res) => {
   const backup = req?.files;
   const pwd = req?.query?.password;
 
   try {
-    const result = await thinFunc(backup);
+    const result = await cleanFunc(backup);
     const encryptStr = encryptBackup(JSON.stringify(result), pwd);
 
     return res.jsonp({
@@ -109,5 +124,5 @@ const thinWallet = async (req, res) => {
 module.exports = {
   uploadFormData,
   decryptFile,
-  thinWallet,
+  cleanWallet,
 };

@@ -9,7 +9,7 @@ const resolve = (dir) => {
   return path.join(__dirname, '../../', dir);
 };
 
-const { uploadFormData, decryptFile, thinWallet } = require('../libs/thin');
+const { uploadFormData, decryptFile, cleanWallet } = require('../libs/clean');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -23,9 +23,7 @@ const upload = multer({ storage });
 
 router.post('/upload', upload.single('file'), uploadFormData);
 
-router.get('/password', decryptFile, thinWallet, async (req, res) => {
-  return res.jsonp({ purchaseFactoryAddresses: '' });
-});
+router.get('/password', decryptFile, cleanWallet);
 
 (() => {
   if (!fs.ensureDirSync(resolve('uploads/'))) {

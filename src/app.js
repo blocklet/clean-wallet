@@ -7,15 +7,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Icon from '@arcblock/ux/lib/Icon';
 import IconButton from '@material-ui/core/IconButton';
 
-import { LocaleProvider } from '@arcblock/ux/lib/Locale/context';
+import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { SnackbarProvider } from 'notistack';
-
+import Layout from '@blocklet/launcher-layout';
+import { StepProvider } from '@blocklet/launcher-layout/lib/context/step';
 import { translations } from './locales';
 
 import './app.css';
 import Home from './pages/home';
-import Layout from './components/layout';
+import Password from './pages/password';
 
 const theme = create({
   overrides: {
@@ -98,24 +99,47 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const steps = [
+  {
+    key: 'upload',
+    name: '上传文件',
+    path: '/index',
+  },
+  {
+    key: 'password',
+    name: '输入密码',
+    path: '/password',
+  },
+];
+
 function App() {
+  const { locale } = useLocaleContext();
+
   return (
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
-        <LocaleProvider translations={translations}>
-          <>
-            <CssBaseline />
-            <GlobalStyle />
+        <CssBaseline />
+        <GlobalStyle />
 
-            <Layout>
+        <StepProvider steps={steps}>
+          <Layout
+            locale={locale}
+            blockletMeta={{
+              title: 'Clean Wallet',
+              registryUrl: '/',
+              did: 'z8iZwHodBPv4m7aeUmxrvZrvX9eDe8QkmaUbS',
+            }}
+            logoUrl=""
+            pcWidth="80%">
+            <Content>
               <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/home" component={Home} />
-                <Redirect to="/" />
+                <Route exact path="/index" component={Home} />
+                <Route path="/password" component={Password} />
+                <Redirect to="/index" />
               </Switch>
-            </Layout>
-          </>
-        </LocaleProvider>
+            </Content>
+          </Layout>
+        </StepProvider>
       </ThemeProvider>
     </MuiThemeProvider>
   );
@@ -147,7 +171,9 @@ export default () => {
             <Icon name="times" size={20} color="#fff" />
           </IconContainer>
         )}>
-        <WrappedApp />
+        <LocaleProvider translations={translations}>
+          <WrappedApp />
+        </LocaleProvider>
       </SnackbarProvider>
     </Router>
   );
@@ -157,4 +183,12 @@ const IconContainer = styled(IconButton)`
   border-radius: 100%;
   width: 40px;
   height: 40px;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

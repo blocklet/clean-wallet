@@ -15,9 +15,11 @@ import Typography from '@material-ui/core/Typography';
 
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
-import Table from '@src/components/table/thin';
+import Table from '@src/components/table/clean';
+import nacl from 'tweetnacl';
 
 import { withStyles } from '@material-ui/core/styles';
+import { toUint8Array, toBase58, fromBase58 } from '@ocap/util';
 
 import api from '../../libs/api';
 import { downloadBackupFile } from '../../libs/util';
@@ -49,7 +51,7 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function FormDialog({ onClose }) {
+export default function FormDialog({ keyPair, onClose }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
@@ -62,14 +64,23 @@ export default function FormDialog({ onClose }) {
   });
 
   const onSubmit = async (res) => {
-    // eslint-disable-next-line no-console
     try {
       setLoading(true);
 
+      const encryptPwd = nacl.box(
+        toUint8Array(res.password),
+        toUint8Array(fromBase58(keyPair.nonce)),
+        toUint8Array(fromBase58(keyPair.publicKey)),
+        toUint8Array(fromBase58(keyPair.secretKey))
+      );
+      const base64EncryptPwd = toBase58(encryptPwd);
+
       const content = await api({
         method: 'get',
-        url: '/api/thin/password',
-        params: res,
+        url: '/api/clean/password',
+        params: {
+          password: base64EncryptPwd,
+        },
       });
 
       setData(content);
@@ -173,6 +184,7 @@ export default function FormDialog({ onClose }) {
 }
 
 FormDialog.propTypes = {
+  keyPair: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const useStyles = makeStyles({
   table: {
@@ -14,19 +15,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ThinTable({ apps, accounts }) {
+export default function cleanTable({ apps, accounts }) {
   const classes = useStyles();
   const rows = [
     {
       before: apps.before,
       after: apps.after,
       ratio: parseInt((((apps.before || 0) - (apps.after || 0)) / apps.before) * 100, 10),
+      clean: (apps.before || 0) - (apps.after || 0),
       name: 'APP',
     },
     {
       before: accounts.before,
       after: accounts.after,
       ratio: parseInt((((accounts.before || 0) - (accounts.after || 0)) / accounts.before) * 100, 10),
+      clean: (accounts.before || 0) - (accounts.after || 0),
       name: 'ACCOUNT',
     },
   ];
@@ -53,11 +56,17 @@ export default function ThinTable({ apps, accounts }) {
           ))}
         </TableBody>
       </Table>
+      <Tips>{`Tips: Clean up ${rows[0].clean} of apps information and ${rows[1].clean} accounts information`}</Tips>
     </TableContainer>
   );
 }
 
-ThinTable.propTypes = {
+cleanTable.propTypes = {
   apps: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
 };
+
+const Tips = styled.div`
+  font-size: 14px;
+  color: red;
+`;

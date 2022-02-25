@@ -1,5 +1,5 @@
-name: thin-wallet
-title: thin-wallet
+name: clean-wallet
+title: clean-wallet
 description: A Blocklet Server blocklet
 keywords:
   - blocklet
@@ -27,13 +27,13 @@ interfaces:
   - type: web
     name: publicUrl
     path: /
-    prefix: "*"
+    prefix: '*'
     port: BLOCKLET_PORT
     protocol: http
-community: ""
-documentation: ""
-homepage: ""
-license: ""
+community: ''
+documentation: ''
+homepage: ''
+license: ''
 charging:
   price: 0
   tokens: []
@@ -41,9 +41,9 @@ charging:
 timeout:
   start: 60
 requirements:
-  abtnode: ">=1.4.0"
-  os: "*"
-  cpu: "*"
+  abtnode: '>=1.4.0'
+  os: '*'
+  cpu: '*'
 scripts:
   preStart: node server/hooks/pre-start.js
   dev: npm run start
@@ -54,5 +54,5 @@ environments:
     default: https://beta.abtnetwork.io/api/
     secure: false
 capabilities: {}
-screenshots: []
+screenshots: ['upload.png', 'password.png', 'download.png']
 children: []

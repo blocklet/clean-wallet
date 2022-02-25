@@ -8,7 +8,7 @@ const authFn = async (app) => {
   try {
     const res = await axios({
       url: link,
-      timeout: 5000,
+      timeout: 10000,
     });
 
     if (res.status === 200) {
@@ -125,6 +125,9 @@ const backupV1 = async (file) => {
         tokenId: 'none',
         tokenAddress: 'none',
         subEndpoint: '',
+        CNYPrice: '',
+        USDPrice: '',
+        networkId: 1,
       };
     });
 
