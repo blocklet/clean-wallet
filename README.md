@@ -12,18 +12,6 @@ With NPM:
 npx clean-wallet
 ```
 
-With Yarn:
-
-```bash
-yarn dlx clean-wallet
-```
-
-With PNPM:
-
-```bash
-pnpm dlx clean-wallet
-```
-
 # Use blocklet
 
 ## Use

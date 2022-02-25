@@ -4,7 +4,6 @@ dep:
 	@echo "Install dependencies required for this repo..."
 	@npm install -g yarn
 	@yarn install
-	@yarn global add @blocklet/cli
 
 test:
 	@echo "Running test suites..."
