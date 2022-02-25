@@ -129,7 +129,7 @@ function App() {
               registryUrl: '/',
               did: 'z8iZwHodBPv4m7aeUmxrvZrvX9eDe8QkmaUbS',
             }}
-            logoUrl=""
+            logoUrl="/logo.png"
             pcWidth="80%">
             <Content>
               <Switch>

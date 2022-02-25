@@ -1,5 +1,5 @@
 name: clean-wallet
-version: 0.2.0
+version: 1.0.0
 files:
   - build
   - logo.png
@@ -7,7 +7,7 @@ files:
   - blocklet.md
   - screenshots
   - server/hooks/pre-start.js
-title: clean-wallet
+title: Clean Wallet
 description: A Blocklet Server blocklet
 keywords:
   - blocklet
