@@ -40,7 +40,7 @@ export default function cleanTable({ apps, accounts }) {
         <TableHead>
           <TableRow>
             <TableCell style={{ width: '150px' }} />
-            <TableCell align="center">瘦身钱</TableCell>
+            <TableCell align="center">瘦身前</TableCell>
             <TableCell align="center">瘦身后</TableCell>
             <TableCell align="center">瘦身比例</TableCell>
           </TableRow>

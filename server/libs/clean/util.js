@@ -179,7 +179,7 @@ const func = async (file) => {
     return list;
   }
 
-  if (file?.version === '3.0') {
+  if (file?.version === '3.0' || file?.version === '4.0') {
     if (!file?.base64Seed) {
       throw new Error('Can not find the seed from backup file');
     }
