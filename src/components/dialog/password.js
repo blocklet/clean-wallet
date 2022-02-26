@@ -102,6 +102,8 @@ export default function FormDialog({ keyPair, onClose }) {
     onClose();
   };
 
+  console.log(data);
+
   const password = register('password', { required: true });
 
   const RenderContent = () => {
