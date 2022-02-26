@@ -36,7 +36,7 @@ const option = {
 const encryptBackup = (data, pwd) => {
   let key = createKey(pwd);
   key = CryptoJS.enc.Utf8.parse(key);
-  const cipher = CryptoJS.AES.encrypt(data, key, option);
+  const cipher = CryptoJS.AES.encrypt(data.replace(/\s/g, ''), key, option);
   return cipher.toString();
 };
 

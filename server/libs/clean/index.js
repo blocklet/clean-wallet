@@ -68,6 +68,7 @@ const decryptFile = (req, res, next) => {
     }
 
     req.files = files;
+    req.password = password;
 
     return next();
   } catch (error) {
@@ -77,7 +78,7 @@ const decryptFile = (req, res, next) => {
 
 const cleanWallet = async (req, res) => {
   const backup = req?.files;
-  const pwd = req?.query?.password;
+  const pwd = req?.password;
 
   try {
     const result = await cleanFunc(backup);
@@ -97,25 +98,6 @@ const cleanWallet = async (req, res) => {
         backup: encryptStr,
       },
     });
-    // const now = new Date();
-    // const date = dayjs(now).format('YYYY-MM-DD_HH-mm-ss');
-    // const filename = `abt_backup_${date}.abt`;
-    // const absPath = resolve(filename);
-
-    // fs.writeFile(absPath, encryptStr, (err) => {
-    //   if (err) {
-    //     return res.jsonp({ code: -1, error: err?.message });
-    //   }
-
-    //   res.setHeader('Content-Disposition', contentDisposition(absPath));
-
-    //   // send file
-    //   const stream = fs.createReadStream(absPath);
-    //   stream.pipe(res);
-    //   onFinished(res, () => {
-    //     destroy(stream);
-    //   });
-    // });
   } catch (error) {
     return res.jsonp({ code: -1, error: error?.message });
   }
