@@ -1,11 +1,7 @@
-# `cli`
+# clean-wallet
 
-> TODO: description
+With NPM:
 
-## Usage
-
-```
-const cli = require('cli');
-
-// TODO: DEMONSTRATE API
+```bash
+npx clean-wallet
 ```
