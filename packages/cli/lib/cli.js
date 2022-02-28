@@ -3,10 +3,10 @@
 const fs = require('fs');
 const prompts = require('prompts');
 
-const { decryptBackup, encryptBackup } = require('./libs/encrypt');
-const cleanFunc = require('./libs/clean/util');
+const { backup: cleanFunc, encrypt, utils } = require('clean-utils');
 
-const { printError, printSuccess, printInfo, wrapSpinner } = require('./utils');
+const { decryptBackup, encryptBackup } = encrypt;
+const { printError, printSuccess, printInfo, wrapSpinner } = utils;
 
 async function init() {
   let result = {};

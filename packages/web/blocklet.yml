@@ -1,4 +1,4 @@
-name: clean-wallet
+name: clean-wallet-web
 version: 1.0.2
 files:
   - build
@@ -13,7 +13,7 @@ keywords:
   - blocklet
   - react
 group: dapp
-did: z8iZjxpWYaUfvrHPY1uYe6m7a3L6ZY3V4EYgQ
+did: z8iZxKtyeGLaXH4LkQ7Dxk7D86i1M1gQvfjVx
 main: server/index.js
 author:
   name: zhanghan

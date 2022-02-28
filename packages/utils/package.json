@@ -1,0 +1,43 @@
+{
+  "name": "clean-utils",
+  "version": "1.0.0",
+  "description": "clean wallet util function",
+  "author": "leermao <447552708@qq.com>",
+  "homepage": "https://github.com/blocklet/clean-wallet#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blocklet/clean-wallet.git"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "build": "rm -rf lib && babel src --out-dir lib --copy-files",
+    "prepublish": "npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/blocklet/clean-wallet/issues"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@ocap/util": "^1.14.19",
+    "axios": "^0.26.0",
+    "chalk": "4.0.0",
+    "cli-progress": "^3.10.0",
+    "crypto-js": "^4.1.1",
+    "customize-cra": "^1.0.0",
+    "lodash": "^4.17.21",
+    "log-symbols": "3.0.0",
+    "ora": "4.0.3",
+    "shelljs": "^0.8.5"
+  }
+}

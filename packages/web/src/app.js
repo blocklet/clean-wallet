@@ -127,7 +127,7 @@ function App() {
             blockletMeta={{
               title: 'Clean Wallet',
               registryUrl: '/',
-              did: 'z8iZwHodBPv4m7aeUmxrvZrvX9eDe8QkmaUbS',
+              did: 'z8iZxKtyeGLaXH4LkQ7Dxk7D86i1M1gQvfjVx',
             }}
             logoUrl="/logo.png"
             pcWidth="80%">
