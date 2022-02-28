@@ -1,11 +1,7 @@
 {
   "name": "clean-wallet-package",
   "version": "1.0.2",
-  "scripts": {
-    "build": "react-app-rewired build",
-    "lint": "eslint src server",
-    "dev": "react-app-rewired start"
-  },
+  "scripts": {},
   "private": true,
   "workspaces": [
     "packages/*"

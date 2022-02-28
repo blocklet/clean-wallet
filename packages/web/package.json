@@ -1,6 +1,7 @@
 {
   "name": "clean-wallet-web",
-  "version": "1.0.2",
+  "version": "1.1.1",
+  "private": true,
   "scripts": {
     "build": "react-app-rewired build",
     "eject": "react-app-rewired eject",
@@ -42,7 +43,7 @@
     "@ocap/util": "^1.14.16",
     "@ocap/wallet": "latest",
     "axios": "^0.21.1",
-    "clean-utils": "^1.0.0",
+    "clean-utils": "1.1.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

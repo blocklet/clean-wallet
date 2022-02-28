@@ -4,6 +4,11 @@ RELEASE_VERSION=v$(VERSION)
 GIT_BRANCH=$(strip $(shell git symbolic-ref --short HEAD))
 GIT_VERSION="$(strip $(shell git rev-parse --short HEAD))"
 
+config: 
+	@echo "set git config"	
+	@git config --local user.name "bot"
+	@git config --local user.email "bot@arcblock.io"
+
 release:
 	@git config --local user.name "bot"
 	@git config --local user.email "bot@arcblock.io"

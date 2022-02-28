@@ -1,6 +1,6 @@
 {
   "name": "clean-wallet",
-  "version": "0.0.0",
+  "version": "1.1.1",
   "description": "> TODO: description",
   "author": "leermao <447552708@qq.com>",
   "homepage": "https://github.com/blocklet/clean-wallet#readme",
@@ -8,6 +8,9 @@
   "main": "lib/cli.js",
   "bin": {
     "clean-wallet": "lib/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "directories": {
     "lib": "lib",
@@ -27,7 +30,7 @@
     "url": "https://github.com/blocklet/clean-wallet/issues"
   },
   "dependencies": {
-    "clean-utils": "^1.0.0",
+    "clean-utils": "1.1.1",
     "customize-cra": "^1.0.0",
     "prompts": "^2.4.2"
   }

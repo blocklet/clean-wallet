@@ -18,14 +18,57 @@ jobs:
       - name: Set yarn cache
         uses: c-hive/gha-yarn-cache@v2
 
+      - name: Use Node.js v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        id: node_modules-cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: publish-${{ runner.os }}-node-modules-${{env.CACHE_VERSION}}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            publish-${{ runner.os }}-node-modules-${{env.CACHE_VERSION}}
+
       - name: Install dependencies
-        run: yarn
+        run: |
+          make init
+          git checkout .
+
+      - name: Extract current version
+        id: get_version
+        run: |
+          CURRENT_VERSION=$(cat version | awk '{$1=$1;print}')
+          echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
+
+      - name: Config Git
+        run: |
+          make config
+
+      - name: Publish to NPM
+        run: |
+          npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_TOKEN }}"
+          VERSION=$(cat version | awk '{$1=$1;print}')
+          echo "publish version ${VERSION}"
+          lerna version ${CURRENT_VERSION} --exact --no-push --force-publish --yes
+          lerna publish from-git --yes
+
+      - name: Push Version
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GIT_HUB_TOKEN }}
+          branch: ${{ github.ref }}
 
       - name: Blocklet workflow
         uses: blocklet/action-workflow@v1
         with:
           skip-upload: false
           skip-deploy: false
+          working-directory: packages/web
           bundle-command: yarn bundle
           store-endpoint: ${{secrets.STORE_ENDPOINT_PROD}}
           store-access-token: ${{secrets.STORE_ACCESS_TOKEN_PROD}}
@@ -34,8 +77,3 @@ jobs:
           server-access-secret: ${{ secrets.STAGING_NODE_ACCESS_SECRET }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish npm
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}

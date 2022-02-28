@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 
+init build:
+	@make dep
+	@cd packages/web && npm run build
+
 dep:
 	@echo "Install dependencies required for this repo..."
-	@npm install -g yarn
-	@yarn install
+	@lerna bootstrap && lerna link
+
+upgrade:
+	@echo "Upgraded dependencies required for this repo..."
+	@lerna exec --no-bail -- "ncu -u -f /arcblock\|ocap\|abtnode\|blocklet/ && lerna bootstrap && lerna link"
+
+lint:
+	@echo "Running lint..."
+	@npm run lint
 
 test:
 	@echo "Running test suites..."
-
-build:
-	@echo "Building the software..."
+	@npm run test
 
 bundle:
 	@echo "Bundling the software..."
