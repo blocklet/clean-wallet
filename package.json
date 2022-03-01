@@ -1,110 +1,12 @@
 {
-  "name": "clean-wallet",
+  "name": "clean-wallet-package",
   "version": "1.0.2",
-  "bin": {
-    "clean-wallet": "server/clean.js"
-  },
-  "files": [
-    "server/libs/clean",
-    "server/libs/encrypt.js",
-    "server/clean.js",
-    "server/utils.js",
-    "screenshots",
-    "README.md"
+  "scripts": {},
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "scripts": {
-    "build": "react-app-rewired build",
-    "eject": "react-app-rewired eject",
-    "lint": "eslint src server",
-    "dev": "react-app-rewired start",
-    "start": "npm-run-all --parallel start:*",
-    "start:client": "npm run dev",
-    "start:server": "NODE_ENV=development nodemon server/index.js -w server",
-    "clean": "rm -rf .blocklet",
-    "bundle": "npm run bundle:client && npm run bundle:server",
-    "bundle:client": "PUBLIC_URL='/.blocklet/proxy/z8iZwHodBPv4m7aeUmxrvZrvX9eDe8QkmaUbS' npm run build",
-    "bundle:server": "npm run clean && blocklet bundle --zip --create-release",
-    "deploy": "npm run bundle && blocklet deploy .blocklet/bundle",
-    "upload": "npm run bundle && blocklet upload .blocklet/release/blocklet.json"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "dependencies": {
-    "@arcblock/did-auth": "latest",
-    "@arcblock/did-auth-storage-nedb": "latest",
-    "@arcblock/did-connect": "^1.16.30",
-    "@arcblock/ux": "^1.16.30",
-    "@blocklet/launcher-layout": "^1.5.27",
-    "@blocklet/sdk": "latest",
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@ocap/client": "latest",
-    "@ocap/mcrypto": "latest",
-    "@ocap/util": "^1.14.16",
-    "@ocap/wallet": "latest",
-    "axios": "^0.21.1",
-    "chalk": "4.0.0",
-    "cli-progress": "^3.10.0",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "crypto-js": "^4.1.1",
-    "customize-cra": "^1.0.0",
-    "dayjs": "^1.10.7",
-    "dotenv-flow": "^3.2.0",
-    "express": "^4.17.1",
-    "express-async-errors": "^3.1.1",
-    "express-history-api-fallback": "^2.2.1",
-    "file-saver": "^2.0.5",
-    "flat": "^5.0.2",
-    "fs-extra": "^10.0.0",
-    "kolorist": "^1.5.1",
-    "lodash": "^4.17.21",
-    "log-symbols": "3.0.0",
-    "minimist": "^1.2.5",
-    "multer": "^1.4.4",
-    "notistack": "^1.0.10",
-    "ora": "4.0.3",
-    "prompts": "^2.4.2",
-    "prop-type": "^0.0.1",
-    "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-dropzone": "^12.0.4",
-    "react-hook-form": "^7.27.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "shelljs": "^0.8.5",
-    "styled-components": "^5.3.3",
-    "tweetnacl": "^1.0.3",
-    "uuid": "^8.3.2"
-  },
   "devDependencies": {
-    "@arcblock/eslint-config": "latest",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.31.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-unicorn": "^34.0.1",
-    "http-proxy-middleware": "^2.0.1",
-    "nodemon": "^2.0.12",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.2",
-    "react-app-rewired": "^2.2.1"
+    "lerna": "^4.0.0"
   }
 }

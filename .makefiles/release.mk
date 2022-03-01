@@ -4,6 +4,11 @@ RELEASE_VERSION=v$(VERSION)
 GIT_BRANCH=$(strip $(shell git symbolic-ref --short HEAD))
 GIT_VERSION="$(strip $(shell git rev-parse --short HEAD))"
 
+config: 
+	@echo "set git config"	
+	@git config --local user.name "bot"
+	@git config --local user.email "bot@arcblock.io"
+
 release:
 	@git config --local user.name "bot"
 	@git config --local user.email "bot@arcblock.io"
@@ -18,8 +23,7 @@ delete-release:
 bump-version:
 	@echo "Bump version..."
 	@.makefiles/bump_version.sh
-	@test -f "package.json" && .makefiles/bump_node_version.sh
-	@test -f "blocklet.yml" && .makefiles/bump_blocklet_version.sh
+	@.makefiles/bump_blocklet_version.sh
 
 create-pr:
 	@echo "Creating pull request..."

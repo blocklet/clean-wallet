@@ -3,11 +3,13 @@ const fs = require('fs-extra');
 const path = require('path');
 const nacl = require('tweetnacl');
 const { toUint8Array, toBuffer, fromBase58, toBase58 } = require('@ocap/util');
-const { decryptBackup, encryptBackup } = require('../encrypt');
-const cleanFunc = require('./util');
+
+const { backup: cleanFunc, encrypt } = require('clean-utils');
+
+const { decryptBackup, encryptBackup } = encrypt;
 
 const resolve = (dir) => {
-  return path.join(__dirname, '../../../', dir);
+  return path.join(__dirname, '../../', dir);
 };
 
 let files = null;
