@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const resolve = (dir) => {
-  return path.join(__dirname, '../../', dir);
+  return path.join(__dirname, '../../../../', dir);
 };
 
 const { uploadFormData, decryptFile, cleanWallet } = require('../libs/clean');
@@ -24,6 +24,12 @@ const upload = multer({ storage });
 router.post('/upload', upload.single('file'), uploadFormData);
 
 router.get('/password', decryptFile, cleanWallet);
+
+router.get('/health', (req, res) =>
+  res.json({
+    code: 0,
+  })
+);
 
 (() => {
   if (!fs.ensureDirSync(resolve('uploads/'))) {

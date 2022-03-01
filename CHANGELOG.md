@@ -1,6 +1,6 @@
-## 1.1.2 (三月 01, 2022)\n
+## 1.2.0 (三月 01, 2022)\n
 
--chore: support monorepo
+- chore: support monorepo
 
 ## 1.0.2 (二月 26, 2022)\n
 

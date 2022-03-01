@@ -9,7 +9,7 @@ const { backup: cleanFunc, encrypt } = require('clean-utils');
 const { decryptBackup, encryptBackup } = encrypt;
 
 const resolve = (dir) => {
-  return path.join(__dirname, '../../', dir);
+  return path.join(__dirname, '../../../../', dir);
 };
 
 let files = null;
@@ -65,7 +65,6 @@ const decryptFile = (req, res, next) => {
     try {
       files = JSON.parse(abt);
     } catch (error) {
-      console.log(error);
       return res.jsonp({ code: -1, error: 'Failed to parse file' });
     }
 
