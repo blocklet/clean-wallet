@@ -13,7 +13,7 @@
     "clean": "rm -rf .blocklet",
     "bundle": "npm run bundle:client && npm run bundle:server",
     "bundle:client": "PUBLIC_URL='/.blocklet/proxy/z8iZxKtyeGLaXH4LkQ7Dxk7D86i1M1gQvfjVx' npm run build",
-    "bundle:server": "npm run clean && blocklet bundle --zip --create-release",
+    "bundle:server": "npm run clean && blocklet bundle --zip --monorepo --create-release",
     "deploy": "npm run bundle && blocklet deploy .blocklet/bundle",
     "upload": "npm run bundle && blocklet upload .blocklet/release/blocklet.json"
   },
