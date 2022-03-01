@@ -2,7 +2,7 @@
 
 init build:
 	@make dep
-	@cd packages/web && npm run build
+	@cd packages/utils && npm run build
 
 dep:
 	@echo "Install dependencies required for this repo..."
