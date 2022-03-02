@@ -1,11 +1,17 @@
-# `utils`
+# Clean Wallet Util
 
-> TODO: description
+A utility function to clean up the wallet
 
 ## Usage
 
-```
-const utils = require('utils');
+For example:
 
-// TODO: DEMONSTRATE API
+```js
+const { encrypt, utils } = require('clean-utils');
+
+const { decryptBackup } = encrypt;
+const { printError } = utils;
+
+decryptBackup('1', '1233');
+printError('error');
 ```
