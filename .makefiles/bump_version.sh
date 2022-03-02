@@ -21,6 +21,7 @@ VERSION=version
 ADJUSTMENTS_MSG="${QUESTION_FLAG} ${CYAN}Now you can make adjustments to ${WHITE}CHANGELOG.md${CYAN}. Then press enter to continue."
 
 if [ -f $VERSION ]; then
+    git fetch
     BASE_STRING=$(cat $VERSION)
     BASE_LIST=($(echo $BASE_STRING | tr '.' ' '))
     V_MAJOR=${BASE_LIST[0]}
@@ -40,7 +41,7 @@ if [ -f $VERSION ]; then
     echo $INPUT_STRING >$VERSION
 
     echo "## $INPUT_STRING ($NOW)\n" >tmpfile
-    git log --pretty=format:"- %s" "$BASE_STRING"...HEAD >>tmpfile
+    git log --pretty=format:"- %s" "v$BASE_STRING"...HEAD >>tmpfile
     echo "" >>tmpfile
     echo "" >>tmpfile
     cat CHANGELOG.md >>tmpfile

@@ -1,3 +1,7 @@
+## 1.2.1 (三月 02, 2022)\n
+
+- chore: replace logo
+
 ## 1.2.0 (三月 01, 2022)\n
 
 - chore: support monorepo
