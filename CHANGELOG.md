@@ -1,3 +1,7 @@
+## 1.2.2 (三月 02, 2022)\n
+
+- chore: update readme
+
 ## 1.2.1 (三月 02, 2022)\n
 
 - chore: replace logo
