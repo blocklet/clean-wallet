@@ -4,12 +4,8 @@ const pick = require('lodash/pick');
 
 const authFn = async (app) => {
   try {
-    const { origin } = new URL(app?.link);
-
-    const res = await axios.get({
-      url: origin,
-      timeout: 10000,
-    });
+    const url = app?.link;
+    const res = await axios.get(url);
 
     if (res.status === 200) {
       return app;
@@ -155,8 +151,7 @@ const backupV1 = async (file) => {
 
 const backupV3 = async (file) => {
   const { appInfoList, accounts } = file;
-  const appLinks = appInfoList.filter((x) => x.link);
-  const appPromise = appLinks.map((x) => authFn(x));
+  const appPromise = appInfoList.filter((x) => x.link).map((x) => authFn(x));
 
   const appResult = await Promise.all(appPromise);
   const connectApp = appResult.filter((x) => !x.error);

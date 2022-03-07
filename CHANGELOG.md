@@ -1,3 +1,7 @@
+## 1.2.4 (三月 07, 2022)
+
+- chore: fetch url
+
 ## 1.2.3 (三月 07, 2022)\n
 
 - fix: the exported VC is broken
