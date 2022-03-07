@@ -1,6 +1,6 @@
 {
   "name": "clean-wallet",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "The command line to clean up the wallet backup file",
   "author": "leermao <447552708@qq.com>",
   "homepage": "https://github.com/blocklet/clean-wallet#readme",
@@ -32,7 +32,7 @@
     "url": "https://github.com/blocklet/clean-wallet/issues"
   },
   "dependencies": {
-    "clean-utils": "1.2.2",
+    "clean-utils": "1.2.3",
     "customize-cra": "^1.0.0",
     "prompts": "^2.4.2"
   }
