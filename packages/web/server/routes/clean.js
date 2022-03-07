@@ -3,12 +3,7 @@ const router = require('express').Router();
 const multer = require('multer');
 const fs = require('fs-extra');
 
-const path = require('path');
-
-const resolve = (dir) => {
-  return path.join(__dirname, '../../../../', dir);
-};
-
+const { resolve } = require('../util');
 const { uploadFormData, decryptFile, cleanWallet } = require('../libs/clean');
 
 const storage = multer.diskStorage({

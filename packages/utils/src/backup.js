@@ -3,11 +3,11 @@ const axios = require('axios');
 const pick = require('lodash/pick');
 
 const authFn = async (app) => {
-  const link = app?.link;
-
   try {
-    const res = await axios({
-      url: link,
+    const { origin } = new URL(app?.link);
+
+    const res = await axios.get({
+      url: origin,
       timeout: 10000,
     });
 
@@ -20,8 +20,9 @@ const authFn = async (app) => {
       ...app,
     };
   } catch (error) {
+    console.error(error?.message);
     return {
-      error,
+      error: error?.message,
       ...app,
     };
   }
@@ -39,6 +40,7 @@ const backupV1 = async (file) => {
   const { base64Seed, profiles = [], walletEntities = [], myDapps = [], vcs = [], contacts = [] } = file;
 
   let appInfoList = [];
+  let disConnectAPP = [];
   let chainInfoList = [];
   let formatContacts = [];
   let filterAccounts = [];
@@ -72,6 +74,7 @@ const backupV1 = async (file) => {
 
     const appResult = await Promise.all(appPromise);
     appInfoList = appResult.filter((x) => !x.error);
+    disConnectAPP = appResult.filter((x) => x.error);
   }
 
   if (walletEntities && walletEntities.length) {
@@ -132,7 +135,7 @@ const backupV1 = async (file) => {
     });
 
     filterAccounts = accounts.filter((x) => {
-      return appInfoList.find((y) => y.id === x.appId);
+      return !disConnectAPP.find((y) => y.id === x.appId);
     });
   }
 
@@ -157,9 +160,10 @@ const backupV3 = async (file) => {
 
   const appResult = await Promise.all(appPromise);
   const connectApp = appResult.filter((x) => !x.error);
+  const disConnectAPP = appResult.filter((x) => x.error);
 
   const filterAccounts = accounts.filter((x) => {
-    return connectApp.find((y) => y.id === x.appId);
+    return !disConnectAPP.find((y) => y.id === x.appId);
   });
 
   return {

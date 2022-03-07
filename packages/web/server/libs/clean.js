@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 const fs = require('fs-extra');
-const path = require('path');
 const nacl = require('tweetnacl');
 const { toUint8Array, toBuffer, fromBase58, toBase58 } = require('@ocap/util');
 
@@ -8,9 +7,7 @@ const { backup: cleanFunc, encrypt } = require('clean-utils');
 
 const { decryptBackup, encryptBackup } = encrypt;
 
-const resolve = (dir) => {
-  return path.join(__dirname, '../../../../', dir);
-};
+const { resolve } = require('../util');
 
 let files = null;
 let backupStr = '';
