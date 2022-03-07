@@ -5,7 +5,9 @@ const pick = require('lodash/pick');
 const authFn = async (app) => {
   try {
     const url = app?.link;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      timeout: 5000,
+    });
 
     if (res.status === 200) {
       return app;
