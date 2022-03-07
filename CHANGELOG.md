@@ -1,3 +1,7 @@
+## 1.2.3 (三月 07, 2022)\n
+
+- fix: the exported VC is broken
+
 ## 1.2.2 (三月 02, 2022)\n
 
 - chore: update readme
