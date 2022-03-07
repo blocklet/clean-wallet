@@ -1,3 +1,7 @@
+## 1.2.6 (三月 07, 2022)
+
+- chore: make bump
+
 ## 1.2.5 (三月 07, 2022)
 
 - chore: fetch url timeout
