@@ -154,7 +154,6 @@ const backupV3 = async (file) => {
   const appPromise = appInfoList.filter((x) => x.link).map((x) => authFn(x));
 
   const appResult = await Promise.all(appPromise);
-  console.log(appResult);
   const connectApp = appResult.filter((x) => !x.error);
   const disConnectAPP = appResult.filter((x) => x.error);
 
